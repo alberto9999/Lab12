@@ -13,7 +13,7 @@ public class TestDAO {
 	RiversDAO rDAO = new RiversDAO();
 	List<River>rivers= rDAO.getAllRivers();
 
-	System.out.println(rDAO.getFirstDate(rivers.get(0)));
+	System.out.println(rDAO.getDateFlow(rivers.get(0)));
 	
 	
 

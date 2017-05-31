@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import it.polito.tdp.rivers.Model.Event;
 import it.polito.tdp.rivers.Model.River;
 
 public class RiversDAO {
@@ -147,6 +147,52 @@ public class RiversDAO {
 		}
 	}
 
+	public List<Event> getDateFlow(River r) {
+		List<Event> listaEventi= new ArrayList<Event>();
+		final String sql= "SELECT day, flow "+
+                          "FROM flow "+
+                          "WHERE river=? "+ 
+                          "ORDER BY day DESC";
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1,r.getId());
+
+			ResultSet rs = st.executeQuery();
+
+			while(rs.next()) {
+              Event e= new Event(rs.getDate("day").toLocalDate(),rs.getDouble("flow"));
+				 listaEventi.add(e);
+			
+			}
+
+			return listaEventi;
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
+	
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -2,15 +2,16 @@ package it.polito.tdp.rivers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import it.polito.tdp.rivers.Model.Model;
-import it.polito.tdp.rivers.Model.River;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import it.polito.tdp.rivers.Model.Model;
+import it.polito.tdp.rivers.Model.River;
+
 
 public class RiversController {
 
@@ -59,7 +60,24 @@ public class RiversController {
        txtNumMeasurements.setText(String.valueOf(model.getNumeroMisure(r)));
        txtFMed.setText(String.valueOf(model.getAVGFlusso(r)));
     }
-	
+   
+    
+    @FXML
+    void doSimula(ActionEvent event) {
+    	try{
+   River r= boxRiver.getValue();
+   if(Float.parseFloat(txtK.getText())<=0){
+	   txtResult.setText("k deve essere >0");
+   }
+   else{
+   model.simula(r,Float.parseFloat(txtK.getText()),Float.parseFloat(txtFMed.getText()));
+   txtResult.setText("NO EROGAZIONE: "+model.getStat().getNoErogazione()+"\nOCCUPAZIONE MEDIA: "+model.getStat().getOccupazioneMedia());
+   }}
+    	catch (RuntimeException re) {
+    		txtResult.setText("FORMATO INPUT NON VALIDO ");
+    	}
+    	}
+
 	
     
 
